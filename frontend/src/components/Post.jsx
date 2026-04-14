@@ -8,7 +8,7 @@ const Post = ({ post }) => {
       onClick={() => navigate(`/posts/${post._id}`)} 
       style={styles.postCard}
     >
-      <p style={styles.author}>@{post.author || 'user'}</p>
+      <p style={styles.author}>@{post.author.email || 'user'}</p>
       <p>{post.message}</p>
     </div>
   );

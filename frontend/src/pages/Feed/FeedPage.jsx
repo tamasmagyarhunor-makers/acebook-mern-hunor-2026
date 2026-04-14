@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post";
+import CreatePost from "../../components/CreatePost";
 
 export function FeedPage() {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const fetchPosts = useCallback(() => {
     const token = localStorage.getItem("token");
-    
     if (!token) {
       navigate("/login");
       return;
@@ -19,19 +19,23 @@ export function FeedPage() {
     getPosts(token)
       .then((data) => {
         setPosts(data.posts);
-        // Note: Generally, the backend shouldn't send a new token on every GET request.
-        // If it does, you can update it here.
-        if(data.token) localStorage.setItem("token", data.token);
+        if (data.token) localStorage.setItem("token", data.token);
       })
-      .catch((err) => {
-        console.error(err);
-        navigate("/login");
-      });
+      .catch(() => navigate("/login"));
   }, [navigate]);
+
+  // Run on mount
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   return (
     <>
-      <h2>Posts</h2>
+      <h2>Feed</h2>
+      {/* we pass down the fetchPosts so that it can be called once a new post is added and so this 
+      component can be re-rendered */}
+      <CreatePost onPostCreated={fetchPosts} />
+      
       <div className="feed" role="feed">
         {posts.map((post) => (
           <Post post={post} key={post._id} />

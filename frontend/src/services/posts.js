@@ -20,7 +20,6 @@ export async function getPosts(token) {
 }
 
 export async function getPost(postId, token) {
-  console.log("post id in services/posts: ", postId);
   const requestOptions = {
     method: "GET",
     headers: {
@@ -29,6 +28,22 @@ export async function getPost(postId, token) {
   };
 
   const response = await fetch(`${BACKEND_URL}/posts/${postId}`, requestOptions);
+
+  const data = await response.json();
+  return data;
+}
+
+export async function createPost(message, token) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({message: message})
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
 
   const data = await response.json();
   return data;
