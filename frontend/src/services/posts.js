@@ -18,3 +18,18 @@ export async function getPosts(token) {
   const data = await response.json();
   return data;
 }
+
+export async function getPost(postId, token) {
+  console.log("post id in services/posts: ", postId);
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts/${postId}`, requestOptions);
+
+  const data = await response.json();
+  return data;
+}
