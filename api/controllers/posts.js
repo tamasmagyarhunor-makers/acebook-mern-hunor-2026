@@ -32,10 +32,38 @@ async function getPost(req, res) {
   }
 }
 
+async function toggleLike(req, res) {
+  const postId = req.params.postId;
+  const userId = req.user_id;
+
+  try {
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({message: "Post not found!"});
+    }
+
+    const isLiked = post.likes.includes(userId); // see if this is adding a like or unliking
+    const update = isLiked ? { $pull: { likes: userId } } : { $addToSet: { likes: userId }};
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      update,
+      { new: true }
+    ).populate("author", "email");
+
+    const newToken = generateToken(req.user_id);
+    res.status(200).json({ post: updatedPost, token: newToken });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
   getPost: getPost,
+  toggleLike: toggleLike
 };
 
 module.exports = PostsController;
