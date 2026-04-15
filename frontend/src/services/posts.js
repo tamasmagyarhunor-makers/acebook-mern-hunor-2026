@@ -2,7 +2,6 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function getPosts(token) {
-  console.log("token in getPosts service: ", token);
   const requestOptions = {
     method: "GET",
     headers: {

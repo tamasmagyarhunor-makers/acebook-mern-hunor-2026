@@ -1,10 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LikeButton from "./LikeButton";
 import { togglePostLike } from "../services/posts"
 
 const Post = ({ post, onPostUpdated }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const currentUserId = localStorage.getItem("user_id");
+
+  const isDetailPage = location.pathname.includes(`/posts/${post._id}`);
 
   const handleLike = async () => {
     try {
@@ -19,12 +22,21 @@ const Post = ({ post, onPostUpdated }) => {
     }
   }
 
+  const handleCardClick = () => {
+    if (!isDetailPage) {
+      navigate(`/posts/${post._id}`);
+    }
+  }
+
   return (
     <div 
-      onClick={() => navigate(`/posts/${post._id}`)} 
-      style={styles.postCard}
+      onClick={handleCardClick}
+      style={{
+        ...styles.postCard,
+        cursor: isDetailPage ? 'default' : 'pointer' // Remove pointer if not clickable
+      }}
     >
-      <p style={styles.author}>@{post.author.email || 'user'}</p>
+      <p style={styles.author}>@{post.author?.email || 'user'}</p>
       <p>{post.message}</p>
       
       <LikeButton 

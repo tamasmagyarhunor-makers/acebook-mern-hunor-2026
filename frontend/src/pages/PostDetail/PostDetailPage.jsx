@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { getPost } from "../../services/posts";
 import { useState, useEffect } from "react";
+import Post from "../../components/Post";
 
 export function PostDetailPage() {
   const { postId } = useParams(); // I need this to get "123" from the url
@@ -30,10 +31,10 @@ export function PostDetailPage() {
   return (
     <div className="post-detail">
       <h2>Post Details</h2>
-      <p>Now viewing post ID: <strong>{postId}</strong></p>
-      <div style={{ border: '1px solid #ddd', padding: '15px', marginTop: '10px' }}>
-        <p>{post.message}</p>
-      </div>
+      <Post 
+        post={post} 
+        onPostUpdated={(updatedPost) => setPost(updatedPost)} 
+      />
       <hr />
       <h4>Replies</h4>
       <ul>

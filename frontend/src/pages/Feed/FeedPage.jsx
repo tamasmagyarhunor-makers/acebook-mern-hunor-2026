@@ -28,7 +28,6 @@ export function FeedPage() {
     setPosts((prevPosts) => 
       prevPosts.map((p) => (String(p._id) === String(updatedPost._id) ? updatedPost : p))
     );
-    console.log(posts);
   };
 
   // Run on mount
