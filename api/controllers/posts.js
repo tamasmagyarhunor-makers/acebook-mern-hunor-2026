@@ -23,7 +23,8 @@ async function createPost(req, res) {
 
 async function getPost(req, res) {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id)
+      .populate("author", "email");
     const token = generateToken(req.user_id);
   
     res.status(200).json({post: post, token: token});
