@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
@@ -13,6 +14,7 @@ const app = express();
 // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 // docs: https://expressjs.com/en/resources/middleware/cors.html
 app.use(cors());
+app.use(morgan('dev'));
 
 // Parse JSON request bodies, made available on `req.body`
 app.use(bodyParser.json());
