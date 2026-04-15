@@ -24,6 +24,13 @@ export function FeedPage() {
       .catch(() => navigate("/login"));
   }, [navigate]);
 
+  const handlePostUpdate = (updatedPost) => {
+    setPosts((prevPosts) => 
+      prevPosts.map((p) => (String(p._id) === String(updatedPost._id) ? updatedPost : p))
+    );
+    console.log(posts);
+  };
+
   // Run on mount
   useEffect(() => {
     fetchPosts();
@@ -38,7 +45,7 @@ export function FeedPage() {
       
       <div className="feed" role="feed">
         {posts.map((post) => (
-          <Post post={post} key={post._id} />
+          <Post post={post} key={post._id} onPostUpdated={handlePostUpdate}/>
         ))}
       </div>
     </>

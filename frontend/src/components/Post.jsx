@@ -1,7 +1,23 @@
 import { useNavigate } from "react-router-dom";
+import LikeButton from "./LikeButton";
+import { togglePostLike } from "../services/posts"
 
-const Post = ({ post }) => {
+const Post = ({ post, onPostUpdated }) => {
   const navigate = useNavigate();
+  const currentUserId = localStorage.getItem("user_id");
+
+  const handleLike = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const data = await togglePostLike(post._id, token);
+
+      if (data.token) localStorage.setItem("token", data.token);
+
+      if (onPostUpdated) onPostUpdated(data.post);
+    } catch (error) {
+      console.error("Failed to toggle like ", error);
+    }
+  }
 
   return (
     <div 
@@ -10,6 +26,12 @@ const Post = ({ post }) => {
     >
       <p style={styles.author}>@{post.author.email || 'user'}</p>
       <p>{post.message}</p>
+      
+      <LikeButton 
+        likes={post.likes}
+        currentUserId={currentUserId}
+        onToggle={handleLike}
+      />
     </div>
   );
 };
