@@ -11,10 +11,7 @@ const Post = ({ post, onPostUpdated }) => {
 
   const handleLike = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const data = await togglePostLike(post._id, token);
-
-      if (data.token) localStorage.setItem("token", data.token);
+      const data = await togglePostLike(post._id);
 
       if (onPostUpdated) onPostUpdated(data.post);
     } catch (error) {

@@ -7,11 +7,8 @@ export default function CreatePost({ onPostCreated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-
     try {
-      const data = await createPost(message, token);
-      if (data.token) localStorage.setItem("token", data.token);
+      await createPost(message);
       
       setMessage(""); // i need to clear the inputs state(form)
       onPostCreated(); // this is the fetchPosts function passed into this component from the Feed. 

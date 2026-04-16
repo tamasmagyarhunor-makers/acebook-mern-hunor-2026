@@ -10,16 +10,10 @@ export function FeedPage() {
   const navigate = useNavigate();
 
   const fetchPosts = useCallback(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login");
-      return;
-    }
 
-    getPosts(token)
+    getPosts()
       .then((data) => {
         setPosts(data.posts);
-        if (data.token) localStorage.setItem("token", data.token);
       })
       .catch(() => navigate("/login"));
   }, [navigate]);
