@@ -6,8 +6,7 @@ async function getAllPosts(req, res) {
     .populate("author", "email")
     .sort({ createdAt: -1});
   
-  const token = generateToken(req.user_id);
-  res.status(200).json({ posts: posts, token: token });
+  res.status(200).json({ posts: posts });
 }
 
 async function createPost(req, res) {
@@ -17,17 +16,15 @@ async function createPost(req, res) {
   });
   post.save();
 
-  const newToken = generateToken(req.user_id);
-  res.status(201).json({ message: "Post created", token: newToken });
+  res.status(201).json({ message: "Post created" });
 }
 
 async function getPost(req, res) {
   try {
     const post = await Post.findById(req.params.id)
       .populate("author", "email");
-    const token = generateToken(req.user_id);
   
-    res.status(200).json({post: post, token: token});
+    res.status(200).json({ post: post });
   } catch(error) {
     console.log(error);
   }
@@ -52,8 +49,7 @@ async function toggleLike(req, res) {
       { new: true }
     ).populate("author", "email");
 
-    const newToken = generateToken(req.user_id);
-    res.status(200).json({ post: updatedPost, token: newToken });
+    res.status(200).json({ post: updatedPost });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

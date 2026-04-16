@@ -7,6 +7,7 @@ const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
+const tokenRenewer = require("./middleware/tokenRenewer");
 
 const app = express();
 
@@ -18,6 +19,9 @@ app.use(morgan('dev'));
 
 // Parse JSON request bodies, made available on `req.body`
 app.use(bodyParser.json());
+
+// apply tokenRenewer after bodyParser but before the routes to later have the res.json() overwritten.
+app.use(tokenRenewer);
 
 // API Routes
 app.use("/users", usersRouter);
