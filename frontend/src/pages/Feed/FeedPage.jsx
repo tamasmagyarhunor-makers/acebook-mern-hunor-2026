@@ -24,6 +24,10 @@ export function FeedPage() {
     );
   };
 
+  const handleAddNewPost = (newPost) => {
+    setPosts((prevPosts) => [newPost, ...prevPosts]);
+  }
+
   // Run on mount
   useEffect(() => {
     fetchPosts();
@@ -34,7 +38,7 @@ export function FeedPage() {
       <h2>Feed</h2>
       {/* we pass down the fetchPosts so that it can be called once a new post is added and so this 
       component can be re-rendered */}
-      <CreatePost onPostCreated={fetchPosts} />
+      <CreatePost onPostCreated={handleAddNewPost} />
       
       <div className="feed" role="feed">
         {posts.map((post) => (

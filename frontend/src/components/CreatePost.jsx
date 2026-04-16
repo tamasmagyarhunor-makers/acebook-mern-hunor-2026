@@ -8,11 +8,13 @@ export default function CreatePost({ onPostCreated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createPost(message);
+      const data = await createPost(message);
       
       setMessage(""); // i need to clear the inputs state(form)
-      onPostCreated(); // this is the fetchPosts function passed into this component from the Feed. 
-      // so when we call it, it runs the fetchPosts on the Feed and rerenders the posts and see the post we just added
+      onPostCreated(data.post); // this is the handleAddNewPost function passed into this component from the Feed. 
+      // so when we call it, we pass in the post just created and just update the posts state in users browser.
+      // this way we don't have to rerender the entire FeedPage with all posts, since this single post has been added only.
+      // on a refresh, the real fetch would happen, but this is more efficient and faster for UX
     } catch (err) {
       console.error("Failed to create post", err);
     }

@@ -16,7 +16,7 @@ async function createPost(req, res) {
   });
   post.save();
 
-  res.status(201).json({ message: "Post created" });
+  res.status(201).json({ message: "Post created", post: post });
 }
 
 async function getPost(req, res) {
