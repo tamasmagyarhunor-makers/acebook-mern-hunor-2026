@@ -1,5 +1,4 @@
 const Post = require("../models/post");
-const { generateToken } = require("../lib/token");
 
 async function getAllPosts(req, res) {
   const posts = await Post.find()
@@ -14,14 +13,16 @@ async function createPost(req, res) {
     message: req.body.message,
     author: req.user_id
   });
-  post.save();
+  await post.save();
+
+  await post.populate("author", "email");
 
   res.status(201).json({ message: "Post created", post: post });
 }
 
 async function getPost(req, res) {
   try {
-    const post = await Post.findById(req.params.id)
+    const post = await Post.findById(req.params.postId)
       .populate("author", "email");
   
     res.status(200).json({ post: post });

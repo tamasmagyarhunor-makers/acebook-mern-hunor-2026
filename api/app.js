@@ -5,6 +5,7 @@ const morgan = require("morgan");
 
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
+const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
 const tokenRenewer = require("./middleware/tokenRenewer");
@@ -26,6 +27,8 @@ app.use(tokenRenewer);
 // API Routes
 app.use("/users", usersRouter);
 app.use("/posts", tokenChecker, postsRouter);
+app.use("/posts", tokenChecker, commentsRouter);
+app.use("/comments", tokenChecker, commentsRouter);
 app.use("/tokens", authenticationRouter);
 
 // 404 Handler
