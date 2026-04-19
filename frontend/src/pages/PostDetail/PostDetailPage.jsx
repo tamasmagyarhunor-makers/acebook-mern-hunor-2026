@@ -35,12 +35,6 @@ export function PostDetailPage() {
         post={post} 
         onPostUpdated={(updatedPost) => setPost(updatedPost)} 
       />
-      <hr />
-      <h4>Replies</h4>
-      <ul>
-        <li>UserA: Totally agree!</li>
-        <li>UserB: Have you tried TanStack Router?</li>
-      </ul>
     </div>
   );
 }

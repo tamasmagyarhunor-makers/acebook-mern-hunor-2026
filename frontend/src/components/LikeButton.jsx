@@ -23,15 +23,17 @@ const LikeButton = ({ likes = [], onToggle, currentUserId }) => {
 
 const styles = {
   likeBtn: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#f0f2f5',
     border: 'none',
+    borderRadius: '20px',
     cursor: 'pointer',
-    fontSize: '16px',
+    fontSize: '14px',
     display: 'flex',
     alignItems: 'center',
     gap: '5px',
-    padding: '5px 0',
-    marginTop: '10px'
+    padding: '6px 12px',
+    transition: 'background 0.2s',
+    height: '32px'
   }
 };
 

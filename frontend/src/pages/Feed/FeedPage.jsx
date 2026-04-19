@@ -36,8 +36,8 @@ export function FeedPage() {
   return (
     <>
       <h2>Feed</h2>
-      {/* we pass down the fetchPosts so that it can be called once a new post is added and so this 
-      component can be re-rendered */}
+      {/* we pass down the handleAddNewPost so that it can be called once a new post is added,
+      so the posts state can get the new, created post */}
       <CreatePost onPostCreated={handleAddNewPost} />
       
       <div className="feed" role="feed">

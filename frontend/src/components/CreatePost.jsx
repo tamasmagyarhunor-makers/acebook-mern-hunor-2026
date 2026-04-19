@@ -37,5 +37,5 @@ export default function CreatePost({ onPostCreated }) {
 const styles = {
   form: { display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' },
   input: { padding: '10px', borderRadius: '8px', border: '1px solid #ccc', minHeight: '60px' },
-  button: { padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }
+  button: { padding: '7px 15px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }
 };
